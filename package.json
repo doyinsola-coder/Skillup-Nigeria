@@ -1,0 +1,17 @@
+{
+  "name": "skillup-nigeria",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "giving access to vocational skills",
+  "main": " ./src/index.js",
+  "scripts": {
+    "test": "dev",
+    "start": "nodemon  ./src/index.js"
+  },
+  "author": "DoyinSpace",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
+}
