@@ -13,5 +13,7 @@ export const createNewUser = async (name, email, password, phoneNumber, address)
     })
     await newUser.save();
     return newUser 
-}
+};
+
+
 
