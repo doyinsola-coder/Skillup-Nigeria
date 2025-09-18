@@ -1,10 +1,14 @@
-// import express from 'express'
+import express from 'express';
+import { setupMiddlewares } from './middlewares';
 
-// const app = express()
+const app = express();
 
-// app.get('/', (req, res) => {
-//   res.send('Hello World')
-// })
+setupMiddlewares(app);
 
-// app.listen(3000)
-console.log("first")
+app.get('/', (req, res) => {
+    res.send('Hello World');
+});
+
+app.listen(3000, () => {
+    console.log("Listenting on port 3000");
+});
