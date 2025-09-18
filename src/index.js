@@ -6,9 +6,9 @@ const app = express();
 setupMiddlewares(app);
 
 app.get('/', (req, res) => {
-    res.send('Hello World');
+    res.send('Welcome to SkillUp Nigeria');
 });
 
 app.listen(3000, () => {
-    console.log("Listenting on port 3000");
+    console.log("Listening on port 3000");
 });
