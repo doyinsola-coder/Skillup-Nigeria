@@ -6,6 +6,6 @@ export const createNewEnrollment = async (user, course) => {
     course,
   });
 
-  await newEnrollment.save(); // now works ✅
+  await newEnrollment.save(); 
   return newEnrollment;
 };
