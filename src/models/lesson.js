@@ -3,19 +3,19 @@ import {Schema, model} from 'mongoose';
 
 const lessonSchema = new Schema({
     title: {
-        type: string,
+        type: String,
         required: true,
     },
     description: {
-        type: string,
+        type: String,
         required: true,
     },
     videoUrl: {
-        type: string,
+        type: String,
         required: true,
     },
     contentType: {
-        type: string,
+        type: String,
         enum: ['video', 'pdf','quiz'],
         required: true,
 
