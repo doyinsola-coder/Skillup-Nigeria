@@ -1,12 +1,18 @@
-import { createNewCourse } from "../services/courses.services.js";
+import { createNewCourse, getAll } from "../services/courses.services.js";
 
 
 export const createCourse = async (req, res) => {
     const { title, description, instructor, price, category, duration } = req.body
     const newCourse = await createNewCourse ( title, description, instructor, price, category, duration)
 
-    if(!newCourse) {
-        return res.status(400).json ({message: "course not created"})
-    }
-    res.status(201).json(newCourse)
+
+}
+
+export const getAllCourses = async (req, res) => {
+    const newCourse = await getAll()
+
+   if (!newCourse) {
+    return res.status(400).json({message: "could not get all courses"})
+   } 
+   res.status(200).json (newCourse)
 }
