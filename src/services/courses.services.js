@@ -13,4 +13,11 @@ export const createNewCourse = async (title, description, instructor, price, cat
     await newCourse.save();
     return newCourse
 
+};
+
+export const getAll = async () => {
+    const newCourse = await Course.find()
+
+    return newCourse
 }
+

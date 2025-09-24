@@ -1,7 +1,8 @@
-import { createNewUser } from "../services/users.services.js";
+import { createNewUser, getAll } from "../services/users.services.js";
 import  User from "../models/user.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+
 
 
 export const createUser = async (req, res) => {
