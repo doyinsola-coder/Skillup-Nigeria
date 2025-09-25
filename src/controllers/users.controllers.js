@@ -8,11 +8,15 @@ import jwt from "jsonwebtoken";
 export const createUser = async (req, res) => {
     const { name, email, password, phoneNumber, address, role } = req.body;
 
+
     try {
         let existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: "user already exists" });
         }
+    if (!newUser) {
+        return res.status(400).json ({message: "user not created"})
+
 
         const saltRounds = parseInt(process.env.SALT_ROUNDS || '10', 10);
         const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -51,11 +55,19 @@ export const createUser = async (req, res) => {
 export async function LoginUser(req, res) {
     const { email, password } = req.body;
 
+
     try {
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
+
+  if (!newUser) {
+    return res.status(400).json({message: "Could not get all users"})
+  }
+  res.status(200).json (newUser)
+}
+
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
