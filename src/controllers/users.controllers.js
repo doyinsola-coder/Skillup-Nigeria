@@ -8,7 +8,7 @@ import jwt from "jsonwebtoken";
 export const createUser = async (req, res) => {
     const { name, email, password, phoneNumber, address, role } = req.body;
 
-    try {
+    try {``
         let existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: "user already exists" });
