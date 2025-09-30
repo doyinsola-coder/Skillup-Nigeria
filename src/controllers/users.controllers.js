@@ -8,10 +8,11 @@ import jwt from "jsonwebtoken";
 export const createUser = async (req, res) => {
     const { name, email, password, phoneNumber, address, role } = req.body;
 
-    try {``
-        let existingUser = await User.findOne({ email });
-        if (existingUser) {
-            return res.status(400).json({ message: "user already exists" });
+
+    try {
+        let User = await User.findOne({ email });
+        if (User) {
+            return res.status(409).json({ msg: "user already exists with this email" });
         }
 
         const saltRounds = parseInt(process.env.SALT_ROUNDS || '10', 10);
@@ -42,14 +43,15 @@ export const createUser = async (req, res) => {
                 role: user.role
             }
         });
-    } catch (error) {
-        console.error('Error in user registration:', error);
-        return res.status(500).json({ message: 'Server error' });
+    } catch (err) {
+        console.error('Error in register:', err);
+        return res.status(500).json({ msg: 'Server error'});
     }
 };
 
 export async function LoginUser(req, res) {
     const { email, password } = req.body;
+
 
     try {
         const user = await User.findOne({ email });
@@ -65,7 +67,7 @@ export async function LoginUser(req, res) {
         const payload = { user: { id: user._id, role: user.role } };
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN || '1h' });
 
-        res.json({
+        return res.json({
             token,
             user: {
                 id: user._id,
