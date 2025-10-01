@@ -1,26 +1,27 @@
-import express from 'express';
-import app from './app.js'
-import { setupMiddlewares } from './middlewares/index.js';
-import { configDotenv } from 'dotenv';
-import { connect } from 'mongoose';
+import { config as dotenvConfig } from "dotenv";
+dotenvConfig();  // MUST be first
 
+import express from "express";
+import { connect } from "mongoose";
+import app from "./app.js";
+import { setupMiddlewares } from "./middlewares/index.js";
 
-
+// Setup middlewares
 setupMiddlewares(app);
 
-configDotenv();
+// Connect DB
 try {
-    const conn = await connect(process.env.MONGO_URL);
-    console.log(`MongoDb connected: ${conn.connection.host}`);
+  const conn = await connect(process.env.MONGO_URL);
+  console.log(`MongoDb connected: ${conn.connection.host}`);
 } catch (error) {
-    console.log(error);
-    process.exit(1);
+  console.log(error);
+  process.exit(1);
 }
 
-
-
-
-    const PORT = process.env.PORT || 3000;
+// Start server
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-    console.log("Listening on port 3000");
+  console.log(`Listening on port ${PORT}`);
+  console.log("Email user:", process.env.EMAIL_USER);
+  console.log("Email pass length:", process.env.EMAIL_PASS?.length);
 });
