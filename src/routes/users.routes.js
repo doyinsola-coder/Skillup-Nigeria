@@ -1,15 +1,15 @@
 import { Router } from "express";
-import { createUser } from "../controllers/users.controllers.js";
-import { LoginUser } from "../controllers/users.controllers.js";
-
+import { createUser, LoginUser } from "../controllers/users.controllers.js";
 
 const router = Router();
 
-router.post("/",createUser);
+// Auth routes
+router.post("/register", createUser);
 router.post("/login", LoginUser);
 
-router.get('/', async (req, res) => {
-    res.json({ User: req.User });
+// Test route
+router.get("/", (req, res) => {
+  res.json({ message: "User routes working 🚀" });
 });
 
 export default router;

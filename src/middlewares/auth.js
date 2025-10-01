@@ -1,23 +1,26 @@
-const jwt = Require('jsonwebtoken');
-import { User } from "../models/user.js";
+import jwt from "jsonwebtoken";
 
-async (req, res, next) =>{
-    const authHeader = req.header('Authorization');
-    if (!authHeader) return res.status(401).json({ msg: 'No token, authorization denied '});
+export const authMiddleware = async (req, res, next) => {
+  const authHeader = req.header("Authorization");
+  if (!authHeader) {
+    return res.status(401).json({ msg: "No token, authorization denied" });
+  }
 
-    const parts = authHeader.split(' ');
-    if (parts.length !== 2 || parts[0] !== 'Bearer') {
-        return res.status(401).json({ msg: 'Invalid Authorization header format. Expected:Bearer <token>' });
-    }
-    const token = parts[1];
+  const parts = authHeader.split(" ");
+  if (parts.length !== 2 || parts[0] !== "Bearer") {
+    return res.status(401).json({
+      msg: "Invalid Authorization header format. Expected: Bearer <token>",
+    });
+  }
 
-    try {
-        const decoded = jwt.verify(token, process.env.JWR_SECRET);
+  const token = parts[1];
 
-        req.User = decoded.User;
-        next();
-    } catch (err) {
-        console.error('Auth middleware error', err);
-        return res.status(401).json({ msg: 'Token is not valid' });
-    }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded.user; // lowercase to match your payload
+    next();
+  } catch (err) {
+    console.error("Auth middleware error", err);
+    return res.status(401).json({ msg: "Token is not valid" });
+  }
 };
