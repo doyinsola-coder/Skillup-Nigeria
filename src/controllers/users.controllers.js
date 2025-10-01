@@ -4,6 +4,46 @@ import jwt from "jsonwebtoken";
 import { sendWelcomeEmail } from "../services/email.services.js";
 
 export const createUser = async (req, res) => {
+    const { name, email, password, phoneNumber, address, role } = req.body;
+
+
+    try {
+        let User = await User.findOne({ email });
+        if (User) {
+            return res.status(409).json({ msg: "user already exists with this email" });
+        }
+
+        const saltRounds = parseInt(process.env.SALT_ROUNDS || '10', 10);
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        const user = new User({
+            name,
+            email,
+            password: hashedPassword,
+            phoneNumber,
+            address,
+            role: role || 'learner'
+        });
+
+        await user.save();
+
+        const payload = { user: { id: user._id, role: user.role } };
+        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN || '1h' });
+
+        return res.status(201).json({
+            token,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                phoneNumber: user.phoneNumber,
+                address: user.address,
+                role: user.role
+            }
+        });
+    } catch (err) {
+        console.error('Error in register:', err);
+        return res.status(500).json({ msg: 'Server error'});
   const { name, email, password, phoneNumber, address, role } = req.body;
 
   try {
@@ -37,6 +77,10 @@ export const createUser = async (req, res) => {
       console.error("Email sending failed:", err);
     }
 
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Invalid credentials' });
+        }
     // Generate JWT
     const payload = { user: { id: user._id, role: user.role } };
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
@@ -65,11 +109,17 @@ export const createUser = async (req, res) => {
     });
   }
 };
-
-
+        return res.json({
+            token,
+            user: {
+                id: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role
+            }
+        });
 export const LoginUser = async (req, res) => {
   const { email, password } = req.body;
-
   try {
     const user = await User.findOne({ email });
     if (!user) {

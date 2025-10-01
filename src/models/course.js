@@ -14,17 +14,10 @@ const courseSchema =    new Schema ({
         ref: 'User',
         required: true,
     },
-    price: {
-        type: Number,
-        required: true,
-    },
     category: {
         type: String,
         required: true,
-    },
-    duration: {
-        type: Number,
-        required: true,
+        enum: ['Plumbing', 'Tailoring', 'Catering', 'Electrical', 'Fashion Design', 'Carpentry', 'Welding', 'Automobile Repair', 'Cosmetology', 'Information Technology']
     },
     createdAt: {
         type: Date,
@@ -34,9 +27,6 @@ const courseSchema =    new Schema ({
         type: Date,
         default: Date.now,
     },
-
-    
-    
 });
 
 const Course = model('Course', courseSchema);
