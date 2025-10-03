@@ -22,6 +22,4 @@ try {
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
-  console.log("Email user:", process.env.EMAIL_USER);
-  console.log("Email pass length:", process.env.EMAIL_PASS?.length);
 });

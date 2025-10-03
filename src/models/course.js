@@ -10,14 +10,14 @@ const courseSchema =    new Schema ({
         required: true,
     },
     instructor: {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: 'User',
         required: true,
     },
     category: {
         type: String,
         required: true,
-        enum: ['Plumbing', 'Tailoring', 'Catering', 'Electrical', 'Fashion Design', 'Carpentry', 'Welding', 'Automobile Repair', 'Cosmetology', 'Information Technology']
+        enum: ['Technology', 'Business', 'Design', 'Creative']
     },
     createdAt: {
         type: Date,

@@ -5,11 +5,13 @@ const enrollmentSchema = new Schema ({
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true,
+      
     },
     course: {
         type: Schema.Types.ObjectId,
         ref: 'Course',
         required: true,
+        
     },
     enrolledAt: {
         type: Date,
@@ -21,7 +23,7 @@ const enrollmentSchema = new Schema ({
         default: 'active',
     },
 }, {timestamps: true});
-
+enrollmentSchema.index({ userId: 1, courseId: 1 }, { unique: true });
 const Enrollment = model('Enrollment', enrollmentSchema);
 
 export default Enrollment;
