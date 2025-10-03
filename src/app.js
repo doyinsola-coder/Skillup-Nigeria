@@ -12,10 +12,9 @@ const app = express();
 
 // ✅ CORS FIRST
 app.use(cors({
-  origin: "http://localhost:5173",  // frontend
+  origin: ["http://localhost:5173", "https://skillup-nigeria-react.vercel.app"],
   credentials: true,
 }));
-
 // ✅ Then built-in JSON + other middlewares
 setupMiddlewares(app);
 
